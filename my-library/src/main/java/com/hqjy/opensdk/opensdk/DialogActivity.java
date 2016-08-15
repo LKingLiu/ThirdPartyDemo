@@ -3,6 +3,7 @@ package com.hqjy.opensdk.opensdk;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -18,11 +19,11 @@ public class DialogActivity extends Activity {
 					.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
+							Statistics.getInstance().getSP(DialogActivity.this,"");
+							Intent intent = new Intent();
+							intent.setClassName("com.hq.other.otherdemo", "com.hq.other.otherdemo.OtherLoginActivity");
+							startActivity(intent);
 							finish();
-
-//	    	        	   Intent intent = new Intent(DialogActivity.this,OtherLoginActivity.class);
-//	    	        	   startActivity(intent);
-//	    	        		finish();
 						}
 					})
 					.setNegativeButton("取消",new DialogInterface.OnClickListener() {//添加返回按钮

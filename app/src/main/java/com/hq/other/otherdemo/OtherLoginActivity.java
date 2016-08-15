@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hqjy.opensdk.opensdk.DialogActivity;
 import com.hqjy.opensdk.opensdk.Statistics;
 public class OtherLoginActivity extends Activity {
 	TextView txt_back;
@@ -17,7 +18,7 @@ public class OtherLoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.other_login_activity);
-		Statistics.getInstance().getSP(OtherLoginActivity.this, "");
+		Statistics.getInstance().deleteSP(OtherLoginActivity.this);
 		txt_back = (TextView) findViewById(R.id.other_youe_back);
 		findViewById(R.id.other_btn).setOnClickListener(new OnClickListener() {
 			@Override
@@ -41,27 +42,13 @@ public class OtherLoginActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		Statistics.getInstance().getData(requestCode, resultCode, data, OtherLoginActivity.this);
-		switch (requestCode) {
-			case 1:
-				if (resultCode == Activity.RESULT_OK) {
-					Intent intent = new Intent(OtherLoginActivity.this, MainActivity.class);
-					intent.putExtra("true", "手动授权成功，\n第三方安装未登录----->返回数据:" + data.getStringExtra("user"));
-					startActivity(intent);
-					finish();
-				}
-				break;
-			case 2:
-				if (resultCode == Activity.RESULT_OK) {
-					Intent intent = new Intent(OtherLoginActivity.this, MainActivity.class);
-					intent.putExtra("true", "自动授权成功，\n第三方安装已登录----->返回数据:" + data.getStringExtra("user"));
-					startActivity(intent);
-					finish();
-
-				}
-				break;
-			default:
-				Toast.makeText(getApplicationContext(), "授权失败", Toast.LENGTH_SHORT).show();
-				break;
+		if (resultCode == Activity.RESULT_OK) {
+			Intent intent = new Intent(OtherLoginActivity.this, MainActivity.class);
+			intent.putExtra("true", "授权成功\n----->返回数据:\n" +"用户名="+ data.getStringExtra("user")+"\n其他数据="+data.getStringExtra("loginstate"));
+			startActivity(intent);
+			finish();
+		}else{
+			Toast.makeText(getApplicationContext(), "授权失败", Toast.LENGTH_SHORT).show();
 		}
 	}
 

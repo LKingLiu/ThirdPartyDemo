@@ -19,7 +19,7 @@ public class DialogActivity extends Activity {
 					.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							Statistics.getInstance().getSP(DialogActivity.this,"");
+							Statistics.getInstance().deleteSP(DialogActivity.this);
 							Intent intent = new Intent();
 							intent.setClassName("com.hq.other.otherdemo", "com.hq.other.otherdemo.OtherLoginActivity");
 							startActivity(intent);

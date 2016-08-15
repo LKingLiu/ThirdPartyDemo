@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.util.Log;
 
 public class MResource {
-   private Connector go;
    public static int getIdByName(Context context, String className, String name) {
       String packageName = context.getPackageName();
       Class r = null;
@@ -38,14 +37,6 @@ public class MResource {
          e.printStackTrace();
       }
       return id;
-   }
-
-
-   public interface Connector {
-      public void setgoout();
-   }
-   public void setgooutListener(Connector go) {
-      this.go = go;
    }
 
 }

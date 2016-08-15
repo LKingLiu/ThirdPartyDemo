@@ -18,33 +18,26 @@ public class Statistics<ac> {
 
 		return mStatistics;
 	}
-	public void init(String appid,Activity ac) {
-		this.appid = appid;//获取到了appid
-
-		if(!checkInstallation(ac)){//没有安装优e学堂，跳转到下载界面
-			Uri uri = Uri.parse("http://www.google.com");
+	public void init(String appid,Activity ac) {//初始化SDK
+		this.appid = appid;
+		if(!checkInstallation(ac)){//没有安装优e学堂，引导到下载界面
+			Uri uri = Uri.parse("http://www.baidu.com");
 			Intent it = new Intent(Intent.ACTION_VIEW,uri);
 			ac.startActivity(it);
 		}else{//安装了“优e学堂”，跳转到“优e学堂”登录授权界面
 			Intent intent = new Intent();
 			intent.setClassName("com.hengqian.education.excellentlearning.localwork", "com.hengqian.education.excellentlearning.ui.mine.MyFileActivity");
 			intent.putExtra("APPID", appid);
-			ac.startActivityForResult(intent, 2);
+			ac.startActivityForResult(intent, 1);
 		}
-
 	}
 
+	//授权登录完成，获取返回值
 	public  String getData(int requestCode, int resultCode, Intent data,Activity ac) {
 		String info = null;
 		String name = null;
 		switch (requestCode) {
 			case 1:
-				if (resultCode == Activity.RESULT_OK) {
-					info = data.getStringExtra("first");
-					name = data.getStringExtra("user");
-				}
-				break;
-			case 2:
 				if (resultCode == Activity.RESULT_OK) {
 					if(null!=data.getStringExtra("loginstate")){
 						info = data.getStringExtra("loginstate");
@@ -86,7 +79,7 @@ public class Statistics<ac> {
 	/**
 	 *  清除SDK储存的用户名
 	 */
-	public static void setSP(Activity ac)
+	public static void deleteSP(Activity ac)
 	{
 		SharedPreferences.Editor sharedata = ac.getSharedPreferences("data", 0).edit();
 		sharedata.putString("name","");

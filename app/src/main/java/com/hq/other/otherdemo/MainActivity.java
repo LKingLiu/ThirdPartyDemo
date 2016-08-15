@@ -29,7 +29,7 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 finish();
                 //在退出登录方法里添加清除数据方法
-                Statistics.getInstance().getSP(MainActivity.this,"");
+                Statistics.getInstance().deleteSP(MainActivity.this);
             }
         });
     }
@@ -40,13 +40,13 @@ public class MainActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Statistics.getInstance().getSP(MainActivity.this,"");
+        Statistics.getInstance().deleteSP(MainActivity.this);
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) { //按下的如果是BACK，同时没有重复
-            Statistics.getInstance().getSP(MainActivity.this,"");
+            Statistics.getInstance().deleteSP(MainActivity.this);
             finish();
             return true;
         }
